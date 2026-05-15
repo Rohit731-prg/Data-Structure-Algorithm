@@ -63,6 +63,42 @@ class DoubleLinkList:
         return value
 
 
+    def delete_At_middle(self, num):
+        if self.head == None:
+            print("List is empty")
+            return
+        temp = self.head
+        while temp.data != num and temp != None: # type: ignore
+            temp = temp.next
+        
+        if temp is None:
+            print("Value not found")
+            return
+        value = temp.data
+        pre = temp.prev
+        pre.next = temp.next # type: ignore
+        nex = temp.next
+        nex.prev = temp.prev # type: ignore
+        del temp
+        return value
+    
+
+    def delete_At_middle_node(self):
+        if self.head is None:
+            print("List is empty")
+            return
+        p1 = p2 = self.head
+        while p2 is not None and p2.next is not None and p2.next.next is not None:
+            p1 = p1.next # type: ignore
+            p2 = p2.next.next
+        if p1 is None:
+            return
+        Value = p1.data
+        p1.prev.next = p1.next # type: ignore
+        p1.next.prev = p1.prev # type: ignore
+        del p1
+        return Value
+
     def display(self):
         if self.head is None or self.tail is None:
             print("List is empty")
@@ -82,6 +118,13 @@ doubleLinkList.insert_At_end(40)
 doubleLinkList.insert_At_end(50)
 
 doubleLinkList.display()
+
+print("\n\t------------Double Linked List Delete At middle----------------\n")
+print(doubleLinkList.delete_At_middle_node())
+
+print("\n\t------------Double Linked List Delete At given value----------------\n")
+print(doubleLinkList.delete_At_middle(40))
+
 print("\n\t------------Double Linked List Delete At End----------------\n")
 print(doubleLinkList.delete_At_end())
 
