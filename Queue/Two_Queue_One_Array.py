@@ -1,45 +1,66 @@
 import random as rd
-from typing import List, Optional
 
 class Queue:
-    def __init__(self, limit: int) -> None:
-        self.arr: List[Optional[int]] = [None] * limit
-        self.front = -1
-        self.rear = limit
-        self.front_delete = 0
-        self.rear_delete = limit - 1
+    def __init__(self, limit) -> None:
+        self.arr = [0] * limit
+        self.front1 = -1
+        self.front2 = limit
+        self.rear1 = -1
+        self.rear2 = limit
+        self.size = limit
 
-    def insert1(self, num: int) -> None:
-        if self.front + 1 == self.rear:
-            print("Queue overflow")
-            return
-        self.front += 1
-        self.arr[self.front] = num
-        print(num, " is added into queue")
-
-    def insert2(self, num: int) -> None:
-        if self.front + 1 == self.rear:
-            print("Queue overflow")
-            return
-        self.rear -= 1
-        self.arr[self.rear] = num
-        print(num, " is added into queue")
-
-    def delete1(self):
-        num = self.arr[self.front_delete]
-        self.arr[self.front_delete] = None
-        self.front_delete += 1
-        return num
     
-    def delete2(self):
-        num = self.arr[self.rear_delete]
-        self.arr[self.rear_delete] = None
-        self.rear_delete -= 1
-        return num
+    def enqueue1(self, num: int):
+        if self.rear1 + 1 == self.rear2:
+            print("Queue overflow")
+            return
+        if self.front1 == -1:
+            self.front1 += 1
+        self.rear1 += 1
+        self.arr[self.rear1] = num
+        print(num, " added into queue 1")
 
+    def enqueue2(self, num):
+        if self.rear2 - 1 == self.rear1:
+            print("Queue overflow")
+            return
+        if self.front2 == self.size:
+            self.front2 -= 1
+        self.rear2 -= 1
+        self.arr[self.rear2] = num
+        print(num, " added into queue 2")
+
+
+    def dequeue1(self):
+        if self.front1 == -1:
+            print("Queue underflow")
+            return
+        val = self.arr[self.front1]
+        self.arr[self.front1] = 0
+        if self.front1 == self.rear1:
+            self.front1 = -1
+            self.rear1 = -1
+        else:
+            self.front1 += 1
+        return val
+    
+
+    def dequeue2(self):
+        if self.front2 == self.size:
+            print("Queue underflow")
+            return
+        val = self.arr[self.front2]
+        self.arr[self.front2] = 0
+        if self.front2 == self.rear2:
+            self.front2 = self.size
+            self.rear2 = self.size
+        else:
+            self.front2 -= 1
+        return val
+    
     def display(self):
-        print("\nList: ")
-        print(self.arr)
+        print("\nQueue: ", self.arr)
+
 
 limit = int(input("Enter Array limit: "))
 qu = Queue(limit)
@@ -51,17 +72,17 @@ while (True):
     ch = int(input("Enter your choice: "))
     if ch == 1:
         ele = rd.randint(11, 99)
-        qu.insert1(ele)
+        qu.enqueue1(ele)
     elif ch == 2:
         ele = rd.randint(11, 99)
-        qu.insert2(ele)
+        qu.enqueue2(ele)
 
     elif ch == 3:
-        ele = qu.delete1()
+        ele = qu.dequeue1()
         print("Poped element: ", ele)
 
     elif ch == 4:
-        ele = qu.delete2()
+        ele = qu.dequeue2()
         print("Poped element: ", ele)
 
     elif ch == 5:
