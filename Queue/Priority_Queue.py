@@ -8,18 +8,16 @@ class Queue:
         return self.rear == -1
     
     def push(self, num, p):
-        if self.is_empty():
-            self.rear += 1
-            self.queue.append(num)
-            self.priority.append(p)
-            return
-        max = 0
+        pos = len(self.priority)
+
         for i in range(len(self.priority)):
-            if self.priority[i] > self.priority[max]:
-                max = i
+            if p > self.priority[i]:
+                pos = i
+                break
+
+        self.queue.insert(pos, num)
+        self.priority.insert(pos, p)
         self.rear += 1
-        self.queue.insert(max, num)
-        self.priority.insert(max, p)
 
     def pop(self):
         if self.is_empty():
