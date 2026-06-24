@@ -12,7 +12,7 @@ class Sort:
 
 
 limit = int(input("Enter Limit: "))
-lst = []
+lst = []    
 for i in range(limit):
     element = int(input("Enter Data: "))
     lst.append(element)

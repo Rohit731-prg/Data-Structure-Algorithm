@@ -1,49 +1,37 @@
-def partition(arr, start, mid, end):
-    # get the size of 2 arrays
-    s1 = mid - start + 1
-    s2 = end - mid
-
-    left_array = [0] * s1
-    right_array = [0] * s2
-
-    for i in range(s1):
-        left_array[i] = arr[start + i]
-    for j in range(s2):
-        right_array[j] = arr[mid + 1 + j]
+def marge(start_array, end_array):
+    list = []
 
     i = j = 0
-    k = start
-    while i < s1 and j < s2:
-        if left_array[i] > right_array[j]:
-            arr[k] = right_array[j]
-            j += 1
-            k += 1
-        else:
-            arr[k] = left_array[i]
+    print(start_array, end_array)
+    while i < len(start_array) and j < len(end_array):
+        if start_array[i] < end_array[j]:
+            list.append(start_array[i])
             i += 1
-            k += 1
-    while i < s1:
-        arr[k] = left_array[i]
-        i += 1
-        k += 1
-    while j < s2:
-        arr[k] = right_array[j]
-        j += 1
-        k += 1
+        else:
+            list.append(end_array[j])
+            j += 1
+            
+
+    list.extend(start_array[i:])
+    list.extend(end_array[j:])
+
+    return list
+
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
     
+    mid = len(arr) // 2
+
+    left_array = arr[:mid]
+    right_array = arr[mid:]
+
+    left = merge_sort(left_array)
+    right = merge_sort(right_array)
+
+    return marge(left, right)
 
 
-
-def Marge_Sort(arr, start, end):
-    if start < end:
-        mid = (start + end) // 2
-
-        Marge_Sort(arr, start, mid)
-        Marge_Sort(arr, mid + 1, end)
-        partition(arr, start, mid, end)
-
-arr = [15, 45, 25, 35, 85, 75, 55]
-print("Original Array: ", arr)
-print("\n\t\t---------------------------\n")
-Marge_Sort(arr, 0, (len(arr) - 1))
-print("Sorted Array: ", arr)
+numbers = [38, 27, 43, 3, 9, 82, 10, 55]
+print("Original:", numbers)
+print("Sorted:  ", merge_sort(numbers))
